@@ -104,7 +104,7 @@ The easiest way to manage your storage is with the **Azure Storage Explorer**, a
 
 ### **6\. Access Microsoft Azure Hosted Earth Data**
 
-Azure hosts a massive repository of analysis-ready geospatial data through the **Planetary Computer**. This includes datasets like Landsat, Sentinel, GOES, and more.
+Azure hosts a massive repository of analysis-ready geospatial data through the **Microsoft Planetary Computer**. This includes datasets like Landsat, Sentinel, GOES, and more.
 
 * **What is it?** The [Planetary Computer](https://planetarycomputer.microsoft.com/) combines a multi-petabyte catalog of data with flexible APIs and a JupyterHub environment, allowing you to run your analysis right next to the data, eliminating the need for large downloads.  
 * **How to Access:**  
@@ -114,28 +114,45 @@ Azure hosts a massive repository of analysis-ready geospatial data through the *
 
 Here's a conceptual Python snippet showing how you might access it:
 
-import pystac\_client  
-import planetary\_computer
+```python
+import pystac_client  
+import planetary_computer
 
-\# Open the Planetary Computer STAC catalog  
-catalog \= pystac\_client.Client.open(  
+# Open the Planetary Computer STAC catalog  
+catalog = pystac_client.Client.open(  
     "https://planetarycomputer.microsoft.com/api/stac/v1",  
-    modifier=planetary\_computer.sign\_inplace,  
+    modifier=planetary_computer.sign_inplace,  
 )
 
-\# Define search parameters  
-search \= catalog.search(  
-    collections=\["sentinel-2-l2a"\],  
-    bbox=\[-73.25, 44.25, \-73.0, 44.5\], \# Bounding box for a region  
+# Define search parameters  
+search = catalog.search(  
+    collections=["sentinel-2-l2a"],  
+    bbox=[-73.25, 44.25, -73.0, 44.5], # Bounding box for a region  
     datetime="2020-06-01/2020-07-01",  
-    query={"eo:cloud\_cover": {"lt": 10}},  
+    query={"eo:cloud_cover": {"lt": 10}},  
 )
 
-\# Get the results and open the first item  
-items \= search.get\_all\_items()  
-asset \= items\[0\].assets\["B04"\] \# Red band
+# Get the results and open the first item  
+items = search.get_all_items()  
+asset = items[0].assets["B04"] # Red band
+```
 
-### **7\. Bring Your Own Script to the Cloud with Azure Functions**
+### **7. Build Derived Data and Applications with Planetary Computer Pro**
+Microsoft Planetary Computer (MPC) Pro delivers the performance and functionality of Planetary Computer directly into the hands of scientists and devlopers.  By leveraging the technology and open standards that power Planetary Computer, MPC Pro provides a fully managed geospatial data storage, cataloging, and rendering platform enabling you to host private data, build new derived data products, and disseminate these to your organziation, or to your customers, through custom geospatial applications. 
+
+* **Use Cases**
+  * As a remote-sensing data provider, I can ingest, store, query, and visualize multi-band raster data products both for my organizaiton, or for downstream customers or consumers
+  * As a data scientist, I can create new rasterized geospatial data products from a combination of open and private data, and disseminate those data products using standard STAC APIs
+  * As a geospatial applicaiton developer, I can serve render complex geospatial raster data directly into a map-based web application for my customers to consume and interact with.
+
+* **Start working with MPC Pro**
+  1. Learn more about [Planetary Computer Pro](https://learn.microsoft.com/azure/planetary-computer/)
+  1. [Deploy a GeoCatalog Resource](https://learn.microsoft.com/azure/planetary-computer/deploy-geocatalog-resource?tabs=azureportal)
+  1. [Ingest geospatial data](https://learn.microsoft.com/azure/planetary-computer/ingestion-overview) into Planetary Computer Pro
+  1. [Visualize geospatial data](https://learn.microsoft.com/azure/planetary-computer/render-configuration)
+  1. [Build applications](https://learn.microsoft.com/azure/planetary-computer/render-configuration) with Planetary Computer Pro
+
+### **8\. Bring Your Own Script to the Cloud with Azure Functions**
 
 Azure Functions is a **serverless** compute service. This means you can run a script in response to a trigger (like a new file being uploaded to Blob Storage) without needing to manage a VM.
 
@@ -158,7 +175,7 @@ Azure Functions is a **serverless** compute service. This means you can run a sc
 
 This is a powerful way to automate your data pipelines with minimal overhead.
 
-### **8\. Getting Started with Azure Machine Learning Studio**
+### **9\. Getting Started with Azure Machine Learning Studio**
 
 Azure Machine Learning (Azure ML) is an end-to-end platform for building, training, and deploying machine learning models.
 
@@ -178,7 +195,7 @@ Azure Machine Learning (Azure ML) is an end-to-end platform for building, traini
 4. Upload a dataset to your default blob store and create a Data asset from it.  
 5. Try running an Automated ML job to see it in action.
 
-### **9\. Using Azure OpenAI with Earth Data**
+### **10\. Using Azure OpenAI with Earth Data**
 
 This is where things get exciting. You can combine the power of Large Language Models (LLMs) like GPT-4 with your scientific data.
 
@@ -199,7 +216,7 @@ This is where things get exciting. You can combine the power of Large Language M
    d. Send the prompt and data to your Azure OpenAI endpoint via a REST API call.  
    e. Process the LLM's text-based response.
 
-### **10\. Glossary and Acronyms Explained**
+### **11\. Glossary and Acronyms Explained**
 
 | Azure Term | AWS Equivalent | Description |
 | :---- | :---- | :---- |
@@ -213,4 +230,5 @@ This is where things get exciting. You can combine the power of Large Language M
 | **Azure ML** | Amazon SageMaker | A comprehensive platform for building, training, and deploying machine learning models. |
 | **Azure Cost Management** | AWS Cost Explorer | The tool for monitoring, analyzing, and optimizing your Azure spending. |
 | **Azure Active Directory (Azure AD)** | IAM (Identity and Access Management) | Manages user identities and access controls. |
+| **Planetary Computer Pro** | No equivalent | Fully managed, geospatial data management and dissemination platform.
 
